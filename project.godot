@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "PlayerData",
+"language": "GDScript",
+"path": "res://assets/scripts/PlayerData.gd"
+}, {
+"base": "Node",
+"class": "ServerNetwork",
+"language": "GDScript",
+"path": "res://assets/scripts/ServerNetwork.gd"
+} ]
+_global_script_class_icons={
+"PlayerData": "",
+"ServerNetwork": ""
+}
+
 [application]
 
 config/name="Hide N Seek - Server"

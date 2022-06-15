@@ -1,29 +1,19 @@
 extends RichTextLabel
 
+onready var network = get_node("../Network")
+
 
 func send_server_message(message):
 	var name = "Сервер"
-	var data = {"name": name, "text": message}
-	append_data(data)
+	network.add_message_to_chat(name, message)
 	if (get_tree().network_peer):
-		rpc("append_data", data)
+		network.rpc("add_message_to_chat", name, message)
 
 
 func clear():
-	update_text("")
+	network.update_chat_text("")
 	if (get_tree().network_peer):
-		rpc("update_text", "")
-
-
-remote func append_data(data):
-	if (data.name == null || data.text == null): 
-		return
-	
-	bbcode_text += "[u]{name}[/u]: {text} \n".format({"name": data.name, "text": data.text})
-
-
-remote func update_text(new_text):
-	bbcode_text = new_text
+		network.rpc("update_chat_text", "")
 
 
 func _on_send_pressed():
