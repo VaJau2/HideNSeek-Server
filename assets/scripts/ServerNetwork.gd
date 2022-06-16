@@ -6,8 +6,9 @@ const MAX_PLAYERS = 15
 
 onready var main = get_node("../")
 onready var chat = get_node("../chat")
+onready var playersList = get_node("../playersList")
 
-var playersData = {}
+var timestamp = 0
 
 
 func _ready():
@@ -16,7 +17,7 @@ func _ready():
 
 func player_connected(id, name):
 	var player = PlayerData.new(id, name)
-	playersData[id] = player
+	playersList.add_player(id, player)
 	update_players_count()
 	chat.send_server_message("Игрок {name} присоединился".format({
 		"name": name
@@ -24,16 +25,17 @@ func player_connected(id, name):
 
 
 func player_disconnected(id):
-	var playerName = playersData[id].name
-	playersData.erase(id)
+	var playerName = playersList.get_player(id).name
+	playersList.remove_player(id)
 	update_players_count()
+	rpc("despawn_puppet", id)
 	chat.send_server_message("Игрок {name} покинул сервер".format({
 		"name": playerName
 	}))
 
 
 func update_players_count():
-	var players_count = playersData.keys().size()
+	var players_count = playersList.get_count()
 	var main = get_node("/root/Main")
 	main.update_players_count(String(players_count))
 

@@ -29,6 +29,7 @@ func update_server_status():
 	var peer = get_tree().network_peer
 	if peer is NetworkedMultiplayerENet: 
 		network.stop_server(peer)
+		playersList.clear_players()
 	else:
 		network.create_server()
 

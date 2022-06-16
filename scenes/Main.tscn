@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/materials/interface_theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/scripts/Main.gd" type="Script" id=2]
 [ext_resource path="res://assets/scripts/Chat.gd" type="Script" id=3]
 [ext_resource path="res://assets/scripts/Network.gd" type="Script" id=4]
+[ext_resource path="res://assets/scripts/PlayersList.gd" type="Script" id=5]
+[ext_resource path="res://assets/scripts/KickButton.gd" type="Script" id=6]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -73,6 +75,7 @@ margin_top = -44.0
 margin_right = -128.0
 margin_bottom = -20.0
 theme = ExtResource( 1 )
+script = ExtResource( 5 )
 
 [node name="Label" type="Label" parent="."]
 anchor_left = 1.0
@@ -97,6 +100,7 @@ margin_right = -248.0
 margin_bottom = 20.0
 theme = ExtResource( 1 )
 text = "кикнуть"
+script = ExtResource( 6 )
 
 [node name="ban" type="Button" parent="."]
 visible = false
@@ -187,5 +191,6 @@ margin_bottom = -56.0
 theme = ExtResource( 1 )
 text = "Запустить сервер"
 
+[connection signal="pressed" from="kick" to="kick" method="on_pressed"]
 [connection signal="pressed" from="chatSubmit" to="chat" method="_on_send_pressed"]
 [connection signal="pressed" from="start" to="." method="update_server_status"]
