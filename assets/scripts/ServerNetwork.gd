@@ -15,8 +15,8 @@ func _ready():
 	get_tree().connect("network_peer_disconnected", self, "player_disconnected")
 
 
-func player_connected(id, name):
-	var player = PlayerData.new(id, name)
+func player_connected(id, name, gender):
+	var player = PlayerData.new(id, name, gender)
 	playersList.add_player(id, player)
 	update_players_count()
 	chat.send_server_message("Игрок {name} присоединился".format({

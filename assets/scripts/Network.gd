@@ -5,8 +5,8 @@ func kick_player(id):
 	rpc_id(id, "force_disconnect")
 
 
-remote func add_player(id, name):
-	player_connected(id, name)
+remote func add_player(id, name, gender):
+	player_connected(id, name, gender)
 
 
 remote func add_message_to_chat(name, message):
