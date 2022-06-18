@@ -4,6 +4,7 @@ var id: int
 var timestamp: int
 var name: String
 var position: Vector2
+var partsData: Dictionary
 
 func _init(id: int, name: String):
 	self.id = id

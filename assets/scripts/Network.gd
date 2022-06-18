@@ -21,16 +21,18 @@ remote func update_chat_text(new_text):
 	chat.bbcode_text = new_text
 
 
-remote func spawn_player_in_map(player_id, position):
-	playersList.get_player(player_id).position = position
-	rpc("spawn_puppet", player_id, position)
+remote func spawn_player_in_map(player_id, position, partsData):
+	var player = playersList.get_player(player_id)
+	player.position = position
+	player.partsData = partsData
+	rpc("spawn_puppet", player_id, position, partsData)
 
 
 remote func get_puppets(player_id):
 	for key in playersList.playersData.keys():
 		if key == player_id: continue
-		var position = playersList.get_player(key).position
-		rpc("spawn_puppet", key, position)
+		var player = playersList.get_player(key)
+		rpc("spawn_puppet", key, player.position, player.partsData)
 
 
 remote func sync_player_movement(data):
