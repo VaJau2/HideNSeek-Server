@@ -133,6 +133,7 @@ margin_right = -384.0
 margin_bottom = -112.0
 theme = ExtResource( 1 )
 bbcode_enabled = true
+scroll_following = true
 script = ExtResource( 3 )
 
 [node name="chatInput" type="LineEdit" parent="."]
