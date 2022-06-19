@@ -61,3 +61,13 @@ remote func sync_player_position(data):
 
 remote func say_message(player_id, message):
 	rpc("say_message", player_id, message)
+
+
+remote func sync_interact(player_id, object_path):
+	rpc("sync_interact", player_id, object_path)
+
+
+remote func sync_state(player_id, new_state):
+	var player = playersList.get_player(player_id)
+	player.state = new_state
+	rpc("sync_state", player_id, new_state)
