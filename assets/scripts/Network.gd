@@ -1,10 +1,6 @@
 extends ServerNetwork
 
 
-func kick_player(id):
-	rpc_id(id, "force_disconnect")
-
-
 remote func add_player(id, name, gender):
 	player_connected(id, name, gender)
 
@@ -38,7 +34,7 @@ remote func get_puppets(player_id):
 	for key in playersList.playersData.keys():
 		if key == player_id: continue
 		var player = playersList.get_player(key)
-		rpc("spawn_puppet", key, player.position, player.flip_x, player.partsData)
+		rpc_id(player_id, "spawn_puppet", key, player.position, player.flip_x, player.partsData)
 
 
 remote func sync_player_movement(data):
@@ -71,3 +67,10 @@ remote func sync_state(player_id, new_state):
 	var player = playersList.get_player(player_id)
 	player.state = new_state
 	rpc("sync_state", player_id, new_state)
+
+
+remote func start_game(player_id):
+	if gameManager != null: return
+	gameManager = GameManager.new(self, playersList, player_id)
+	if !gameManager.teleport_players(): return
+	gameManager.wait_and_start()

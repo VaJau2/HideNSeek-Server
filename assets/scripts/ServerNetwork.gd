@@ -2,17 +2,22 @@ extends Node
 
 class_name ServerNetwork
 
-const MAX_PLAYERS = 15
+const MAX_PLAYERS = 11
 
 onready var main = get_node("../")
 onready var chat = get_node("../chat")
 onready var playersList = get_node("../playersList")
 
 var timestamp = 0
+var gameManager = null
 
 
 func _ready():
 	get_tree().connect("network_peer_disconnected", self, "player_disconnected")
+
+
+func kick_player(id):
+	rpc_id(id, "force_disconnect")
 
 
 func player_connected(id, name, gender):
@@ -56,3 +61,8 @@ func stop_server(peer = null):
 	if peer: peer.close_connection()
 	get_tree().network_peer = null
 	main.show_stop_server()
+	cleanGameManager()
+
+
+func cleanGameManager():
+	gameManager = null
