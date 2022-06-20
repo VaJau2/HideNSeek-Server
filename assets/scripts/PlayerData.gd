@@ -8,7 +8,7 @@ var position: Vector2
 var flip_x: bool
 var partsData: Dictionary
 
-enum states {none, waiting, searching, hiding}
+enum states {none, wait, search, hide}
 var state = states.none
 
 func _init(id: int, name: String, gender: String):
