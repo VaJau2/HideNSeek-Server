@@ -56,30 +56,32 @@ remote func get_puppets(player_id):
 		rpc_id(player_id, "spawn_puppet", get_player_data(key))
 
 
-remote func sync_player_movement(data):
-	var player = playersList.get_player(data.player_id)
-	if data.timestamp > player.timestamp:
-		player.timestamp = data.timestamp
-		player.flip_x = data.flip_x
-		data.timestamp = OS.get_ticks_msec()
-		rpc_unreliable("sync_puppet_movement", data)
+remote func sync_player_movement(dir, is_running, timestamp):
+	var player_id = get_tree().get_rpc_sender_id()
+	var player = playersList.get_player(player_id)
+	if timestamp > player.timestamp:
+		player.timestamp = timestamp
+		if dir.x != 0: player.flip_x = dir.x < 0
+		timestamp = OS.get_ticks_msec()
+		rpc_unreliable("sync_puppet_movement", player_id, dir, is_running, timestamp)
 
 
-remote func sync_player_position(data):
-	var player = playersList.get_player(data.player_id)
-	if data.timestamp > player.timestamp:
-		player.timestamp = data.timestamp
-		player.position = data.position
-		data.timestamp = OS.get_ticks_msec()
-		rpc_unreliable("sync_puppet_position", data)
+remote func sync_player_position(position, timestamp):
+	var player_id = get_tree().get_rpc_sender_id()
+	var player = playersList.get_player(player_id)
+	if timestamp > player.timestamp:
+		player.timestamp = timestamp
+		player.position = position
+		timestamp = OS.get_ticks_msec()
+		rpc_unreliable("sync_puppet_position", player_id, position, timestamp)
 
 
-remote func say_message(player_id, message):
-	rpc("say_message", player_id, message)
+remote func say_message(message):
+	rpc("say_message", get_tree().get_rpc_sender_id(), message)
 
 
-remote func sync_interact(player_id, object_path):
-	rpc("sync_interact", player_id, object_path)
+remote func sync_interact(object_path):
+	rpc("sync_interact", get_tree().get_rpc_sender_id(), object_path)
 
 
 remote func sync_state(player_id, new_state):
@@ -92,20 +94,23 @@ remote func sync_state(player_id, new_state):
 	rpc("sync_state", player_id, new_state)
 
 
-remote func sync_hiding(player_id, hide_on, animation):
+remote func sync_hiding(hide_on, animation):
+	var player_id = get_tree().get_rpc_sender_id()
 	var player = playersList.get_player(player_id)
 	player.is_hiding = hide_on
 	player.hiding_animation = animation
 	rpc("sync_hiding", player_id, hide_on, animation)
 
 
-remote func start_game(player_id):
+remote func start_game():
 	if gameManager != null: return
+	var player_id = get_tree().get_rpc_sender_id()
 	gameManager = GameManager.new(self, playersList, player_id)
 	if !gameManager.teleport_players(): return
 	gameManager.wait_and_start()
 
 
-remote func save_hide_in_prop(player_id, is_hiding, prop_path):
+remote func save_hide_in_prop(is_hiding, prop_path):
+	var player_id = get_tree().get_rpc_sender_id()
 	var player = playersList.get_player(player_id)
 	player.my_prop_path = prop_path if is_hiding else ""

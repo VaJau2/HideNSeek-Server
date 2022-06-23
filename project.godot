@@ -34,6 +34,8 @@ _global_script_class_icons={
 
 config/name="Hide N Seek - Server"
 run/main_scene="res://scenes/Main.tscn"
+boot_splash/image="res://assets/blackScreen.png"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://assets/materials/icon.png"
 config/windows_native_icon="res://assets/materials/icon.ico"
 
