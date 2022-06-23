@@ -2,6 +2,8 @@ extends OptionButton
 
 
 var playersData = {}
+var positions_data = {} #ключи - pos, flip_x
+var timestamps = {}
 
 
 func add_player(id: int, playerData: PlayerData):
@@ -25,6 +27,21 @@ func get_player(id: int) -> PlayerData:
 	if (playersData.has(id)):
 		return playersData[id]
 	return null
+
+
+func get_position_data(id: int) -> Dictionary:
+	if positions_data.has(id):
+		return positions_data[id]
+	return {}
+
+
+func get_player_timestamp(id: int) -> int:
+	if timestamps.has(id): return timestamps[id]
+	return 0
+
+
+func set_player_timestamp(id: int, timestamp: int) -> void:
+	timestamps[id] = timestamp
 
 
 func get_selected_player() -> PlayerData:

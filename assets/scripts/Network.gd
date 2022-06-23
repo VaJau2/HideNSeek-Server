@@ -24,10 +24,11 @@ remote func add_message_to_chat_from_user(name, message):
 
 func get_player_data(player_id):
 	var player = playersList.get_player(player_id)
+	var pos_data = playersList.get_position_data(player_id)
 	return {
 		"id": player_id,
-		"position": player.position,
-		"flip_x": player.flip_x,
+		"position": pos_data.position,
+		"flip_x": pos_data.flip_x,
 		"gender": player.gender,
 		"state": player.state,
 		"is_hiding": player.is_hiding,
@@ -39,13 +40,14 @@ func get_player_data(player_id):
 
 remote func spawn_player_in_map(player_id, position, flip_x, partsData):
 	var player = playersList.get_player(player_id)
-	player.position = position
-	player.flip_x = flip_x
 	player.partsData = partsData
+	playersList.positions_data[player_id] = {
+		"position": position,
+		"flip_x": flip_x
+	}
 	
 	#если игрок присоединяется на середине игры
 	if gameManager != null: rpc_id(player_id, "make_bell_disabled")
-	
 	rpc("spawn_puppet", get_player_data(player_id))
 
 
@@ -58,20 +60,22 @@ remote func get_puppets(player_id):
 
 remote func sync_player_movement(dir, is_running, timestamp):
 	var player_id = get_tree().get_rpc_sender_id()
-	var player = playersList.get_player(player_id)
-	if timestamp > player.timestamp:
-		player.timestamp = timestamp
-		if dir.x != 0: player.flip_x = dir.x < 0
+	var player_timestamp = playersList.get_player_timestamp(player_id)
+	if timestamp > player_timestamp:
+		var pos_data = playersList.get_position_data(player_id)
+		playersList.set_player_timestamp(player_id, timestamp)
+		if dir.x != 0: pos_data.flip_x = dir.x < 0
 		timestamp = OS.get_ticks_msec()
 		rpc_unreliable("sync_puppet_movement", player_id, dir, is_running, timestamp)
 
 
 remote func sync_player_position(position, timestamp):
 	var player_id = get_tree().get_rpc_sender_id()
-	var player = playersList.get_player(player_id)
-	if timestamp > player.timestamp:
-		player.timestamp = timestamp
-		player.position = position
+	var player_timestamp = playersList.get_player_timestamp(player_id)
+	if timestamp > player_timestamp:
+		var pos_data = playersList.get_position_data(player_id)
+		playersList.set_player_timestamp(player_id, timestamp)
+		pos_data.position = position
 		timestamp = OS.get_ticks_msec()
 		rpc_unreliable("sync_puppet_position", player_id, position, timestamp)
 
