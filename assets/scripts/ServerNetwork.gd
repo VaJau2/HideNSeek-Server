@@ -34,6 +34,7 @@ func player_disconnected(id):
 	playersList.remove_player(id)
 	update_players_count()
 	rpc("despawn_puppet", id)
+	if gameManager: gameManager.player_leave(id)
 	chat.send_server_message("Игрок {name} покинул сервер".format({
 		"name": playerName
 	}))
@@ -61,8 +62,8 @@ func stop_server(peer = null):
 	if peer: peer.close_connection()
 	get_tree().network_peer = null
 	main.show_stop_server()
-	cleanGameManager()
+	clean_game_manager()
 
 
-func cleanGameManager():
+func clean_game_manager():
 	gameManager = null

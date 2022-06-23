@@ -43,6 +43,9 @@ remote func spawn_player_in_map(player_id, position, flip_x, partsData):
 	player.flip_x = flip_x
 	player.partsData = partsData
 	
+	#если игрок присоединяется на середине игры
+	if gameManager != null: rpc_id(player_id, "make_bell_disabled")
+	
 	rpc("spawn_puppet", get_player_data(player_id))
 
 
@@ -81,6 +84,10 @@ remote func sync_interact(player_id, object_path):
 
 remote func sync_state(player_id, new_state):
 	var player = playersList.get_player(player_id)
+	
+	if player.state == PlayerData.states.hide && new_state == PlayerData.states.none:
+		if gameManager: gameManager.player_found(player_id)
+		
 	player.state = new_state
 	rpc("sync_state", player_id, new_state)
 
