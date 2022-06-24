@@ -2,7 +2,7 @@ class_name GameManager
 
 const START_TIME = 3
 const WAIT_TIME = 10
-const GAME_TIME = 60
+const GAME_TIME = 70
 
 var network = null
 var playersList = null
@@ -61,7 +61,9 @@ func wait_and_start():
 	for i in range(hiders_id.size()):
 		network.rpc_id(hiders_id[i], "start_searching", false)
 	
-	yield(count_timer(int(GAME_TIME / hiders_id.size()) ), "completed")
+	var main_game_time = GAME_TIME - (hiders_id.size() * 10)
+	if main_game_time < 10: main_game_time = 10
+	yield(count_timer(main_game_time), "completed")
 	if check_errors(): return
 	
 	#игра заканчивается

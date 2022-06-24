@@ -17,7 +17,7 @@ func _ready():
 
 
 func kick_player(id):
-	rpc_id(id, "force_disconnect")
+	rpc_id(id, "force_disconnect", "Вы были отключены от сервера")
 
 
 func player_connected(id, name, gender):
