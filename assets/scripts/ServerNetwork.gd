@@ -42,8 +42,8 @@ func player_disconnected(id):
 
 func update_players_count():
 	var players_count = playersList.get_count()
-	var main = get_node("/root/Main")
-	main.update_players_count(String(players_count))
+	var tempMain = get_node("/root/Main")
+	tempMain.update_players_count(String(players_count))
 
 
 func create_server():

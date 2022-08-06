@@ -54,7 +54,6 @@ remote func spawn_player_in_map(player_id, position, flip_x, partsData):
 remote func get_puppets(player_id):
 	for key in playersList.playersData.keys():
 		if key == player_id: continue
-		var player = playersList.get_player(key)
 		rpc_id(player_id, "spawn_puppet", get_player_data(key))
 
 

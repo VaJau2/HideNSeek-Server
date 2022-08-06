@@ -11,9 +11,9 @@ var partsData: Dictionary
 enum states {none, wait, search, hide}
 var state = states.none
 
-func _init(id: int, name: String, gender: String):
-	self.id = id
-	self.name = name
-	self.gender = gender
+func _init(_id: int, _name: String, _gender: String):
+	self.id = _id
+	self.name = _name
+	self.gender = _gender
 	hiding_animation = ""
 	my_prop_path = ""

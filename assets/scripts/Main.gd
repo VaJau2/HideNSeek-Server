@@ -2,6 +2,7 @@ extends Control
 
 onready var chat = get_node("chat")
 onready var network = get_node("Network")
+onready var settingsBack = get_node("settingsBack")
 
 #labels
 onready var status = get_node("status")
@@ -36,3 +37,7 @@ func update_server_status():
 
 func update_players_count(count):
 	$playersCount.text = count
+
+
+func _on_settings_pressed():
+	settingsBack.visible = !settingsBack.visible
