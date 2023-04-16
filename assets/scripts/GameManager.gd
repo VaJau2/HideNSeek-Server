@@ -16,7 +16,7 @@ var temp_timer = 0
 var is_error = false
 
 
-func _init(_network, _playersList, _searcher_id):
+func _init(_network, _playersList, _searcher_id) -> void:
 	self.network = _network
 	self.playersList = _playersList
 	self.searcher_id = _searcher_id
@@ -29,7 +29,7 @@ func _init(_network, _playersList, _searcher_id):
 	load_settings()
 
 
-func load_settings():
+func load_settings() -> void:
 	var settings = network.get_node("../settingsBack")
 	waitTime = int(settings.get_node("WaitTimeSlider").value)
 	gameTime = int(settings.get_node("GameTimeSlider").value)
@@ -37,7 +37,8 @@ func load_settings():
 	isPlayersCountTime = settings.get_node("PlayersCountInput").pressed
 
 
-func get_tree(): return network.get_tree()
+func get_tree() -> SceneTree: 
+	return network.get_tree()
 
 
 func teleport_players() -> bool:
@@ -52,9 +53,9 @@ func teleport_players() -> bool:
 	return true
 
 
-func wait_and_start():
+func wait_and_start() -> void:
 	#несколько секунд, чтобы игроки изучили друг друга
-	yield(count_timer(START_TIME), "completed")
+	await count_timer(START_TIME)
 	if check_errors(): return
 	
 	#ищущий закрывает глаза, прячущиеся разбегаются
@@ -65,7 +66,7 @@ func wait_and_start():
 		var temp_hider = playersList.get_player(hiders_id[i])
 		hiders_names[hiders_id[i]] = temp_hider.name
 	
-	yield(count_timer(waitTime), "completed")
+	await count_timer(waitTime)
 	if check_errors(): return
 	
 	#ищущий открывает глаза и начинает искать
@@ -77,8 +78,8 @@ func wait_and_start():
 	if isPlayersCountTime:
 		main_gameTime = gameTime - (hiders_id.size() * 10)
 		if main_gameTime < 10: main_gameTime = 10
-
-	yield(count_timer(main_gameTime), "completed")
+	
+	await count_timer(main_gameTime)
 	if check_errors(): return
 	
 	#игра заканчивается
@@ -99,16 +100,16 @@ func check_errors() -> bool:
 	return false
 
 
-func count_timer(waitTime):
-	temp_timer = waitTime
+func count_timer(timer) -> void:
+	temp_timer = timer
 	while temp_timer > 0:
 		network.rpc("count_timer", temp_timer)
-		yield(get_tree().create_timer(1), "timeout")
+		await get_tree().create_timer(1).timeout
 		temp_timer -= 1
 	network.rpc("count_timer", 0)
 
 
-func player_found(player_id):
+func player_found(player_id) -> void:
 	if hiders_id.has(player_id):
 		hiders_id.erase(player_id)
 		temp_timer += addTime
@@ -118,7 +119,7 @@ func player_found(player_id):
 		temp_timer = 0
 
 
-func player_leave(player_id):
+func player_leave(player_id) -> void:
 	if player_id == searcher_id:
 		is_error = true
 		temp_timer = 0

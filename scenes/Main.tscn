@@ -1,358 +1,395 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=11 format=3 uid="uid://dn5jen1esu026"]
 
-[ext_resource path="res://assets/materials/interface_theme.tres" type="Theme" id=1]
-[ext_resource path="res://assets/scripts/Main.gd" type="Script" id=2]
-[ext_resource path="res://assets/scripts/Chat.gd" type="Script" id=3]
-[ext_resource path="res://assets/scripts/Network.gd" type="Script" id=4]
-[ext_resource path="res://assets/scripts/PlayersList.gd" type="Script" id=5]
-[ext_resource path="res://assets/scripts/KickButton.gd" type="Script" id=6]
-[ext_resource path="res://assets/materials/settings_button.tres" type="Theme" id=7]
+[ext_resource type="Theme" uid="uid://cr7v5uejnnydb" path="res://assets/materials/interface_theme.tres" id="1"]
+[ext_resource type="Script" path="res://assets/scripts/Main.gd" id="2"]
+[ext_resource type="Script" path="res://assets/scripts/Chat.gd" id="3"]
+[ext_resource type="Script" path="res://assets/scripts/Network.gd" id="4"]
+[ext_resource type="Script" path="res://assets/scripts/PlayersList.gd" id="5"]
+[ext_resource type="Script" path="res://assets/scripts/KickButton.gd" id="6"]
+[ext_resource type="Theme" uid="uid://vaimw2bemqnr" path="res://assets/materials/settings_button.tres" id="7"]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id="1"]
 script/source = "extends HSlider
 
-func _on_WaitTimeSlider_value_changed(value):
-	get_node(\"../WaitTime\").text = str(value)
+func _on_WaitTimeSlider_value_changed(changed_value):
+	get_node(\"../WaitTime\").text = str(changed_value)
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id="2"]
 script/source = "extends HSlider
 
-func _on_GameTimeSlider_value_changed(value):
-	get_node(\"../GameTime\").text = str(value)
+func _on_GameTimeSlider_value_changed(changed_value):
+	get_node(\"../GameTime\").text = str(changed_value)
 "
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id="3"]
 script/source = "extends HSlider
 
-
-
-func _on_AddTimeSlider_value_changed(value):
-	get_node(\"../AddTime\").text = str(value)
+func _on_AddTimeSlider_value_changed(changed_value):
+	get_node(\"../AddTime\").text = str(changed_value)
 "
 
 [node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 2 )
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2")
 
 [node name="Network" type="Node" parent="."]
-script = ExtResource( 4 )
+script = ExtResource("4")
 
 [node name="background" type="ColorRect" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 1 )
-__meta__ = {
-"_edit_lock_": true
-}
+color = Color(0, 0, 0, 1)
 
 [node name="name" type="Label" parent="."]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -64.0
-margin_top = 20.0
-margin_right = 64.0
-margin_bottom = 18.0
-theme = ExtResource( 1 )
+offset_left = -64.0
+offset_top = 20.0
+offset_right = 64.0
+offset_bottom = 18.0
+theme = ExtResource("1")
 text = "Сервер HideNSeek"
 
 [node name="status" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -64.0
-margin_top = 45.0
-margin_right = 64.0
-margin_bottom = 18.0
-theme = ExtResource( 1 )
+offset_left = -64.0
+offset_top = 45.0
+offset_right = 90.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme = ExtResource("1")
 text = "не запущен"
-align = 1
+horizontal_alignment = 1
 
 [node name="playersCountLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -128.0
-margin_top = 88.0
-margin_right = 32.0
-margin_bottom = 106.0
-theme = ExtResource( 1 )
+offset_left = -97.0
+offset_top = 86.0
+offset_right = 86.0
+offset_bottom = 111.0
+grow_horizontal = 2
+theme = ExtResource("1")
 text = "Количество игроков:"
 
 [node name="playersCount" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 40.0
-margin_top = 88.0
-margin_right = 88.0
-margin_bottom = 106.0
-theme = ExtResource( 1 )
+offset_left = 99.0
+offset_top = 86.0
+offset_right = 147.0
+offset_bottom = 111.0
+grow_horizontal = 2
+theme = ExtResource("1")
 text = "0"
-align = 1
 
 [node name="playersList" type="OptionButton" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -320.0
-margin_top = -44.0
-margin_right = -128.0
-margin_bottom = -20.0
-theme = ExtResource( 1 )
-script = ExtResource( 5 )
+offset_left = -320.0
+offset_top = -44.0
+offset_right = -128.0
+offset_bottom = -20.0
+theme = ExtResource("1")
+script = ExtResource("5")
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -312.0
-margin_top = -76.0
-margin_right = -200.0
-margin_bottom = -58.0
-theme = ExtResource( 1 )
+offset_left = -312.0
+offset_top = -76.0
+offset_right = -200.0
+offset_bottom = -58.0
+theme = ExtResource("1")
 text = "Выбрать игрока"
 
 [node name="kick" type="Button" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -320.0
-margin_top = -4.0
-margin_right = -248.0
-margin_bottom = 20.0
-theme = ExtResource( 1 )
+offset_left = -320.0
+offset_top = -4.0
+offset_right = -248.0
+offset_bottom = 20.0
+theme = ExtResource("1")
 text = "кикнуть"
-script = ExtResource( 6 )
+script = ExtResource("6")
 
 [node name="ban" type="Button" parent="."]
 visible = false
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -208.0
-margin_top = -4.0
-margin_right = -128.0
-margin_bottom = 20.0
-theme = ExtResource( 1 )
+offset_left = -208.0
+offset_top = -4.0
+offset_right = -128.0
+offset_bottom = 20.0
+theme = ExtResource("1")
 text = "забанить"
 
 [node name="chatLabel" type="Label" parent="."]
-margin_left = 64.0
-margin_top = 152.0
-margin_right = 640.0
-margin_bottom = 170.0
-theme = ExtResource( 1 )
+layout_mode = 0
+offset_left = 64.0
+offset_top = 152.0
+offset_right = 640.0
+offset_bottom = 170.0
+theme = ExtResource("1")
 text = "Чат"
-align = 1
 
 [node name="chat" type="RichTextLabel" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 64.0
-margin_top = 192.0
-margin_right = -384.0
-margin_bottom = -112.0
-theme = ExtResource( 1 )
+offset_left = 64.0
+offset_top = 192.0
+offset_right = -384.0
+offset_bottom = -112.0
+theme = ExtResource("1")
 bbcode_enabled = true
 scroll_following = true
-script = ExtResource( 3 )
+script = ExtResource("3")
 
 [node name="chatInput" type="LineEdit" parent="."]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 64.0
-margin_top = -88.0
-margin_right = 512.0
-margin_bottom = -56.0
-theme = ExtResource( 1 )
+offset_left = 64.0
+offset_top = -88.0
+offset_right = 512.0
+offset_bottom = -56.0
+theme = ExtResource("1")
 placeholder_text = "текст..."
 
 [node name="chatSubmit" type="Button" parent="."]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 552.0
-margin_top = -88.0
-margin_right = 640.0
-margin_bottom = -56.0
-theme = ExtResource( 1 )
+offset_left = 552.0
+offset_top = -88.0
+offset_right = 640.0
+offset_bottom = -56.0
+theme = ExtResource("1")
 text = "отправить"
 
 [node name="portLabel" type="Label" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -256.0
-margin_top = 32.0
-margin_right = -200.0
-margin_bottom = 64.0
-theme = ExtResource( 1 )
+offset_left = -256.0
+offset_top = 32.0
+offset_right = -200.0
+offset_bottom = 64.0
+theme = ExtResource("1")
 text = "Порт:"
-align = 1
-valign = 1
 
 [node name="port" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -192.0
-margin_top = 32.0
-margin_right = -86.0
-margin_bottom = 64.0
-theme = ExtResource( 1 )
+offset_left = -196.0
+offset_top = 28.0
+offset_right = -90.0
+offset_bottom = 60.0
+grow_horizontal = 0
+theme = ExtResource("1")
 text = "8080"
-align = 1
 max_length = 4
 
 [node name="start" type="Button" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -256.0
-margin_top = -88.0
-margin_right = -64.0
-margin_bottom = -56.0
-theme = ExtResource( 1 )
+offset_left = -256.0
+offset_top = -88.0
+offset_right = -64.0
+offset_bottom = -56.0
+theme = ExtResource("1")
 text = "Запустить сервер"
 
 [node name="settings" type="Button" parent="."]
-margin_left = 32.0
-margin_top = 32.0
-margin_right = 63.0
-margin_bottom = 64.0
-theme = ExtResource( 7 )
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 63.0
+offset_bottom = 64.0
+theme = ExtResource("7")
 
 [node name="settingsBack" type="ColorRect" parent="."]
 visible = false
-margin_left = 64.0
-margin_top = 128.0
-margin_right = 960.0
-margin_bottom = 576.0
-color = Color( 0, 0, 0, 1 )
+layout_mode = 0
+offset_left = 35.0
+offset_top = 115.0
+offset_right = 1126.0
+offset_bottom = 628.0
+color = Color(0, 0, 0, 1)
 
 [node name="WaitTimeLabel" type="Label" parent="settingsBack"]
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -240.0
-margin_top = 80.0
-margin_right = -128.0
-margin_bottom = 98.0
-theme = ExtResource( 1 )
+offset_left = -308.5
+offset_top = 69.0
+offset_right = -173.5
+offset_bottom = 94.0
+grow_horizontal = 2
+theme = ExtResource("1")
 text = "Время ожидания"
-align = 2
 
 [node name="WaitTimeSlider" type="HSlider" parent="settingsBack"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -120.0
-margin_top = 72.0
-margin_right = 256.0
-margin_bottom = 104.0
+offset_left = -120.0
+offset_top = 72.0
+offset_right = 256.0
+offset_bottom = 104.0
 min_value = 2.0
 value = 10.0
-script = SubResource( 1 )
+script = SubResource("1")
 
 [node name="WaitTime" type="Label" parent="settingsBack"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 272.0
-margin_top = 80.0
-margin_right = 320.0
-margin_bottom = 98.0
-theme = ExtResource( 1 )
+offset_left = 272.0
+offset_top = 80.0
+offset_right = 320.0
+offset_bottom = 98.0
+theme = ExtResource("1")
 text = "10"
-align = 1
 
 [node name="GameTimeLabel" type="Label" parent="settingsBack"]
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -256.0
-margin_top = 136.0
-margin_right = -128.0
-margin_bottom = 154.0
-theme = ExtResource( 1 )
+offset_left = -308.5
+offset_top = 133.0
+offset_right = -180.5
+offset_bottom = 158.0
+grow_horizontal = 2
+theme = ExtResource("1")
 text = "Время раунда"
-align = 2
 
 [node name="GameTimeSlider" type="HSlider" parent="settingsBack"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -120.0
-margin_top = 128.0
-margin_right = 256.0
-margin_bottom = 160.0
+offset_left = -120.0
+offset_top = 128.0
+offset_right = 256.0
+offset_bottom = 160.0
 min_value = 10.0
 max_value = 200.0
 value = 70.0
-script = SubResource( 2 )
+script = SubResource("2")
 
 [node name="GameTime" type="Label" parent="settingsBack"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 272.0
-margin_top = 136.0
-margin_right = 320.0
-margin_bottom = 154.0
-theme = ExtResource( 1 )
+offset_left = 272.0
+offset_top = 136.0
+offset_right = 320.0
+offset_bottom = 154.0
+theme = ExtResource("1")
 text = "70"
-align = 1
 
 [node name="AddTimeLabel" type="Label" parent="settingsBack"]
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -288.0
-margin_top = 192.0
-margin_right = -128.0
-margin_bottom = 231.0
-theme = ExtResource( 1 )
+offset_left = -308.5
+offset_top = 181.0
+offset_right = -144.5
+offset_bottom = 231.0
+grow_horizontal = 2
+theme = ExtResource("1")
 text = "Добавляемое время
 при нахождении"
-align = 2
 
 [node name="AddTimeSlider" type="HSlider" parent="settingsBack"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -120.0
-margin_top = 184.0
-margin_right = 256.0
-margin_bottom = 216.0
+offset_left = -120.0
+offset_top = 184.0
+offset_right = 256.0
+offset_bottom = 216.0
 min_value = 2.0
 value = 10.0
-script = SubResource( 3 )
+script = SubResource("3")
 
 [node name="AddTime" type="Label" parent="settingsBack"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 272.0
-margin_top = 192.0
-margin_right = 320.0
-margin_bottom = 210.0
-theme = ExtResource( 1 )
+offset_left = 272.0
+offset_top = 192.0
+offset_right = 320.0
+offset_bottom = 210.0
+theme = ExtResource("1")
 text = "10"
-align = 1
 
 [node name="PlayersCountLabel" type="Label" parent="settingsBack"]
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -264.0
-margin_top = 264.0
-margin_right = 64.0
-margin_bottom = 282.0
-theme = ExtResource( 1 )
+offset_left = -308.5
+offset_top = 253.0
+offset_right = 85.5
+offset_bottom = 278.0
+grow_horizontal = 2
+theme = ExtResource("1")
 text = "Зависимость времени от количества игроков"
-align = 2
 
 [node name="PlayersCountInput" type="CheckBox" parent="settingsBack"]
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 80.0
-margin_top = 256.0
-margin_right = 112.0
-margin_bottom = 288.0
-pressed = true
+offset_left = 123.5
+offset_top = 245.0
+offset_right = 147.5
+offset_bottom = 285.0
+grow_horizontal = 2
+button_pressed = true
+alignment = 1
+icon_alignment = 1
 
 [connection signal="pressed" from="kick" to="kick" method="on_pressed"]
+[connection signal="text_submitted" from="chatInput" to="chat" method="_on_chat_input_text_submitted"]
 [connection signal="pressed" from="chatSubmit" to="chat" method="_on_send_pressed"]
 [connection signal="pressed" from="start" to="." method="update_server_status"]
 [connection signal="pressed" from="settings" to="." method="_on_settings_pressed"]

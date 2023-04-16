@@ -6,12 +6,12 @@ var positions_data = {} #ключи - pos, flip_x
 var timestamps = {}
 
 
-func add_player(id: int, playerData: PlayerData):
+func add_player(id: int, playerData: PlayerData) -> void:
 	playersData[id] = playerData
 	add_item(playerData.name, id)
 
 
-func remove_player(id: int):
+func remove_player(id: int) -> void:
 	playersData.erase(id)
 	var idx = get_item_index(id)
 	remove_item(idx)
@@ -51,6 +51,6 @@ func get_selected_player() -> PlayerData:
 		return null
 
 
-func clear_players():
+func clear_players() -> void:
 	playersData = {}
 	clear()
